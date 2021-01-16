@@ -15,4 +15,10 @@ class CipherTest < Minitest::Test
     @cipher.stubs(:five_digit_number).returns('23901')
     assert_equal '23901', @cipher.five_digit_number
   end
+
+  def test_it_can_generate_date
+    date = Time.now.strftime("%d%m%y").to_i
+    assert_operator date, :==, @cipher.date
+  end
+
 end
