@@ -1,10 +1,12 @@
 class Cipher
   attr_reader :key,
-              :message
+              :message,
+              :alphabet
 
   def initialize(message)
     @message = message
-    @key = ""
+    @key = ''
+    @alphabet = ('a'..'z').to_a << ' '
   end
 
   def five_digit_number
