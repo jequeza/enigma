@@ -11,7 +11,7 @@ class CipherTest < Minitest::Test
     assert_instance_of Cipher, @cipher
     assert_equal ['hello'], @cipher.message
     assert_equal '', @cipher.key
-    expected = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", " "]
+    expected = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', ' ']
     assert_equal expected, @cipher.alphabet
   end
 
@@ -23,6 +23,14 @@ class CipherTest < Minitest::Test
   def test_it_can_generate_date
     date = Time.now.strftime("%d%m%y").to_i
     assert_operator date, :==, @cipher.date
+  end
+
+  def test_it_can_generate_keys
+    @cipher.stubs(:key).returns('23901')
+    assert_equal '23', @cipher.a_key
+    assert_equal '39', @cipher.b_key
+    assert_equal '90', @cipher.c_key
+    assert_equal '01', @cipher.d_key
   end
 
 end
