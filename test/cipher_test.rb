@@ -26,7 +26,6 @@ class CipherTest < Minitest::Test
   end
 
   def test_it_can_generate_keys
-    require "pry"; binding.pry
     @cipher.stubs(:a_key).returns('23')
     @cipher.stubs(:b_key).returns('39')
     @cipher.stubs(:c_key).returns('90')
@@ -35,5 +34,15 @@ class CipherTest < Minitest::Test
     assert_equal '39', @cipher.b_key
     assert_equal '90', @cipher.c_key
     assert_equal '01', @cipher.d_key
+  end
+
+  def test_it_can_square_date_helper
+    @cipher.stubs(:date).returns(160121)
+    assert_equal 25638734641, @cipher.date_squared
+  end
+
+  def test_it_can_generate_offsets
+    require "pry"; binding.pry
+    assert_equal 1, @cipher.a_offset
   end
 end
