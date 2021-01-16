@@ -37,6 +37,26 @@ class Cipher
   end
 
   def date_squared
-    date ** 2
+    (date ** 2).to_s
+  end
+
+  def four_digit_number
+    date_squared[-4, 4]
+  end
+
+  def a_offset
+    four_digit_number[0].to_i
+  end
+
+  def b_offset
+    four_digit_number[1].to_i
+  end
+
+  def c_offset
+    four_digit_number[2].to_i
+  end
+
+  def d_offset
+    four_digit_number[3].to_i
   end
 end
