@@ -59,4 +59,13 @@ class Cipher
   def d_offset
     four_digit_number[3].to_i
   end
+
+  def shifts
+    all_shifts = {}
+    all_shifts[:a] = (a_key.to_i) + a_offset
+    all_shifts[:b] = (b_key.to_i) + b_offset
+    all_shifts[:c] = (c_key.to_i) + c_offset
+    all_shifts[:d] = (d_key.to_i) + d_offset
+    all_shifts
+  end
 end
