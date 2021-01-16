@@ -13,6 +13,12 @@ class Enigma
     handle.close
     text_in
   end
+
+  def write
+    writer = File.open(@file_out, "w")
+    writer.write(encryption)
+    writer.close
+  end
 end
 
 
