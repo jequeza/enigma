@@ -17,12 +17,11 @@ class Enigma
 
   def write
     writer = File.open(@file_out, "w")
-    writer.write(encryption)
+    writer.write(read[0].upcase)
     writer.close
   end
 
   def display_message
-    require "pry"; binding.pry
     "Created #{@file_out} with the key #{@cipher.key} and date #{@cipher.date}"
   end
 end

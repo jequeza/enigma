@@ -29,7 +29,6 @@ class EnigmaTest < Minitest::Test
     @cipher.stubs(:key).returns('14784')
     @cipher.stubs(:date).returns('150121')
     message = "Created #{file_out} with the key #{@cipher.key} and date #{@cipher.date}"
-    require "pry"; binding.pry
     assert_equal message, @enigma.display_message
   end
 end
