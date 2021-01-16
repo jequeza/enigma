@@ -52,4 +52,16 @@ class CipherTest < Minitest::Test
     assert_equal 4, @cipher.c_offset
     assert_equal 1, @cipher.d_offset
   end
+
+  def test_it_can_find_shifts
+    @cipher.expects(:a_key).returns('23')
+    @cipher.expects(:b_key).returns('39')
+    @cipher.expects(:c_key).returns('90')
+    @cipher.expects(:d_key).returns('01')
+    @cipher.expects(:a_offset).returns(4)
+    @cipher.expects(:b_offset).returns(6)
+    @cipher.expects(:c_offset).returns(4)
+    @cipher.expects(:d_offset).returns(1)
+    assert_equal ({a: 27, b: 45, c: 94, d: 2}), @cipher.shifts
+  end
 end
