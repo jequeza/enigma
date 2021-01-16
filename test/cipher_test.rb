@@ -26,11 +26,14 @@ class CipherTest < Minitest::Test
   end
 
   def test_it_can_generate_keys
-    @cipher.stubs(:key).returns('23901')
+    require "pry"; binding.pry
+    @cipher.stubs(:a_key).returns('23')
+    @cipher.stubs(:b_key).returns('39')
+    @cipher.stubs(:c_key).returns('90')
+    @cipher.stubs(:d_key).returns('01')
     assert_equal '23', @cipher.a_key
     assert_equal '39', @cipher.b_key
     assert_equal '90', @cipher.c_key
     assert_equal '01', @cipher.d_key
   end
-
 end

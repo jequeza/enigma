@@ -19,4 +19,20 @@ class Cipher
   def date
     Time.now.strftime("%d%m%y").to_i
   end
+
+  def a_key
+    @key[0..1]
+  end
+
+  def b_key
+    @key[1..2]
+  end
+
+  def c_key
+    @key[2..3]
+  end
+
+  def d_key
+    @key[3..4]
+  end
 end
