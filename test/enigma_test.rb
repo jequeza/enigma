@@ -15,5 +15,11 @@ class EnigmaTest < Minitest::Test
     @enigma.stubs(:read).returns(["hello"])
     assert_equal ["hello"], @enigma.read
   end
+
+  def test_it_can_write_file
+    expected = {decryption: "hello", key: "34519", date: "100299"}
+    @enigma.stubs(:write).returns(expected)
+    assert_equal expected, @enigma.write
+  end
 end
 
