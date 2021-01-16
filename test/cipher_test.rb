@@ -11,12 +11,13 @@ class CipherTest < Minitest::Test
     assert_instance_of Cipher, @cipher
     assert_equal ['hello'], @cipher.message
     assert_equal '', @cipher.key
+    expected = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", " "]
+    assert_equal expected, @cipher.alphabet
   end
 
   def test_it_can_generate_five_digit_number
     @cipher.stubs(:five_digit_number).returns('23901')
     assert_equal '23901', @cipher.five_digit_number
-
   end
 
   def test_it_can_generate_date
