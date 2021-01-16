@@ -38,11 +38,18 @@ class CipherTest < Minitest::Test
 
   def test_it_can_square_date_helper
     @cipher.stubs(:date).returns(160121)
-    assert_equal 25638734641, @cipher.date_squared
+    assert_equal '25638734641', @cipher.date_squared
+  end
+
+  def test_it_can_get_four_digit_number
+    @cipher.stubs(:four_digit_number).returns('4641')
+    assert_equal '4641', @cipher.four_digit_number
   end
 
   def test_it_can_generate_offsets
-    require "pry"; binding.pry
-    assert_equal 1, @cipher.a_offset
+    assert_equal 4, @cipher.a_offset
+    assert_equal 6, @cipher.b_offset
+    assert_equal 4, @cipher.c_offset
+    assert_equal 1, @cipher.d_offset
   end
 end
