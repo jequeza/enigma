@@ -35,4 +35,8 @@ class Cipher
   def d_key
     @key[3..4]
   end
+
+  def date_squared
+    date ** 2
+  end
 end
