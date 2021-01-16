@@ -3,17 +3,20 @@ require "./test/test_helper"
 
 class CipherTest < Minitest::Test
   def setup
-    message = ["hello"]
+    message = ['hello']
     @cipher = Cipher.new(message)
   end
 
-  def test_it_exists
+  def test_it_exists_and_has_attributes
     assert_instance_of Cipher, @cipher
+    assert_equal ['hello'], @cipher.message
+    assert_equal '', @cipher.key
   end
 
   def test_it_can_generate_five_digit_number
     @cipher.stubs(:five_digit_number).returns('23901')
     assert_equal '23901', @cipher.five_digit_number
+
   end
 
   def test_it_can_generate_date
