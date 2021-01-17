@@ -1,0 +1,134 @@
+class Cipher
+  attr_reader :key,
+              :message,
+              :alphabet
+
+  def initialize(message)
+    @message = message
+    @key = ''
+    @alphabet = ('a'..'z').to_a << ' '
+  end
+
+  def five_digit_number
+    num = Array.new(5) { rand(0...9) }
+    num_joined = num.join
+    @key = num_joined
+    num_joined
+  end
+
+  def date
+    Time.now.strftime("%d%m%y").to_i
+  end
+
+  def a_key
+    @key[0..1]
+  end
+
+  def b_key
+    @key[1..2]
+  end
+
+  def c_key
+    @key[2..3]
+  end
+
+  def d_key
+    @key[3..4]
+  end
+
+  def date_squared
+    (date ** 2).to_s
+  end
+
+  def four_digit_number
+    date_squared[-4, 4]
+  end
+
+  def a_offset
+    four_digit_number[0].to_i
+  end
+
+  def b_offset
+    four_digit_number[1].to_i
+  end
+
+  def c_offset
+    four_digit_number[2].to_i
+  end
+
+  def d_offset
+    four_digit_number[3].to_i
+  end
+
+  def shifts
+    all_shifts = {}
+    all_shifts[:a] = (a_key.to_i) + a_offset
+    all_shifts[:b] = (b_key.to_i) + b_offset
+    all_shifts[:c] = (c_key.to_i) + c_offset
+    all_shifts[:d] = (d_key.to_i) + d_offset
+    all_shifts
+  end
+
+  def index_to_letters
+    index_letters = {}
+    alphabet.each.with_index(1) do |letter, index|
+      index_letters[index] = letter
+    end
+    index_letters
+  end
+
+  def letters_to_index
+    letter_indexes = {}
+    alphabet.each.with_index(1) do |letter, index|
+      letter_indexes[letter] = index
+    end
+    letter_indexes
+  end
+
+  def big_shift?(shift, index)
+    ((shift % 27) + index ) > 27
+  end
+
+  def shift_amount(shift, index)
+    if big_shift?(shift, index)
+      (shift % 27) - 27 + index
+    else
+      (shift % 27)
+    end
+  end
+
+  def shift
+    hash = {}
+    shift_collection = [3, 27, 73, 20]
+    i = 0
+    @message[0].chars.each.with_index(1) do |letter, index|
+      hash[index] = shift_collection[i]
+      i += 1
+      if i == shift_collection.length
+        i = 0
+      end
+    end
+    hash
+  end
+
+  def encrypt
+    out_message = ""
+    letters = @message[0].chars
+    letters.each.with_index(1) do |letter, index|
+      # require "pry"; binding.pry
+      i = 1
+      if alphabet.include?(letter) && !big_shift?(shift[index], letters_to_index[letter])
+        out_message += index_to_letters[letters_to_index[letter] + shift_amount(shift[index], letters_to_index[letter])]
+        i += 1
+      elsif alphabet.include?(letter) && big_shift?(shift[index], letters_to_index[letter])
+        out_message += index_to_letters[shift_amount(shift[index], letters_to_index[letter])]
+        i += 1
+      else
+        out_message += letter
+        i += 1
+      end
+    end
+    out_message
+    # require "pry"; binding.pry
+  end
+end
