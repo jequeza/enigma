@@ -4,7 +4,7 @@ class EnigmaTest < Minitest::Test
   def setup
     @enigma = Enigma.new
     @date = Time.now.strftime("%d%m%y").to_i
-    @cipher = mock('cipher')
+    # @cipher = mock('cipher')
   end
 
   def test_it_exists_and_has_attributes
