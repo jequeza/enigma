@@ -68,4 +68,67 @@ class Cipher
     all_shifts[:d] = (d_key.to_i) + d_offset
     all_shifts
   end
+
+  def index_to_letters
+    index_letters = {}
+    alphabet.each.with_index(1) do |letter, index|
+      index_letters[index] = letter
+    end
+    index_letters
+  end
+
+  def letters_to_index
+    letter_indexes = {}
+    alphabet.each.with_index(1) do |letter, index|
+      letter_indexes[letter] = index
+    end
+    letter_indexes
+  end
+
+  def big_shift?(shift, index)
+    ((shift % 27) + index ) > 27
+  end
+
+  def shift_amount(shift, index)
+    if big_shift?(shift, index)
+      (shift % 27) - 27 + index
+    else
+      (shift % 27)
+    end
+  end
+
+  def shift
+    hash = {}
+    shift_collection = [3, 27, 73, 20]
+    i = 0
+    @message[0].chars.each.with_index(1) do |letter, index|
+      hash[index] = shift_collection[i]
+      i += 1
+      if i == shift_collection.length
+        i = 0
+      end
+    end
+    hash
+  end
+
+  def encrypt(message)
+    out_message = ""
+    letters = message[0].chars
+    letters.each.with_index(1) do |letter, index|
+      # require "pry"; binding.pry
+      i = 1
+      if alphabet.include?(letter) && !big_shift?(shift[index], letters_to_index[letter])
+        out_message += index_to_letters[letters_to_index[letter] + shift_amount(shift[index], letters_to_index[letter])]
+        i += 1
+      elsif alphabet.include?(letter) && big_shift?(shift[index], letters_to_index[letter])
+        out_message += index_to_letters[shift_amount(shift[index], letters_to_index[letter])]
+        i += 1
+      else
+        out_message += letter
+        i += 1
+      end
+    end
+    out_message
+    # require "pry"; binding.pry
+  end
 end
