@@ -111,9 +111,9 @@ class Cipher
     hash
   end
 
-  def encrypt(message)
+  def encrypt
     out_message = ""
-    letters = message[0].chars
+    letters = @message[0].chars
     letters.each.with_index(1) do |letter, index|
       # require "pry"; binding.pry
       i = 1

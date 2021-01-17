@@ -5,7 +5,7 @@ class Enigma
   def initialize
     @file_in = ARGV[0]
     @file_out = ARGV[1]
-    # @cipher = Cipher.new
+    @cipher = Cipher.new(read)
   end
 
   def read
@@ -17,12 +17,12 @@ class Enigma
 
   def write
     writer = File.open(@file_out, "w")
-    writer.write(read[0].upcase)
+    writer.write(@cipher.encrypt)
     writer.close
   end
 
   def display_message
-    "Created #{@file_out} with the key #{@cipher.key} and date #{@cipher.date}"
+    "Created #{@file_out} with the key #{@cipher.five_digit_number} and date #{@cipher.date}"
   end
 end
 
