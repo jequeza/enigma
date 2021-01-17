@@ -3,7 +3,7 @@ require "./test/test_helper"
 
 class CipherTest < Minitest::Test
   def setup
-    message = ['hello world']
+    message = ['keder ohulw']
     @cipher = Cipher.new(message)
   end
 
@@ -68,6 +68,10 @@ class CipherTest < Minitest::Test
   def test_it_can_encrypt_message
     # @cipher.expects(:shifts).returns({a: 3, b: 27, c: 73, d: 20})
     message = ["hello world"]
-    assert_equal "keder ohulw", @cipher.encrypt(message)
+    assert_equal "keder ohulw", @cipher.encrypt
+  end
+
+  def test_it_can_decrypt_message
+    assert_equal "hello world", @cipher.decrypt
   end
 end
