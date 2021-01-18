@@ -4,7 +4,7 @@ class Cipher
               :alphabet
 
   def initialize(message)
-    @message = message
+    @message = message #['hello world']
     @key = ''
     @alphabet = ('a'..'z').to_a << ' '
     @al = Algorithm.new(self)
@@ -120,6 +120,7 @@ class Cipher
   end
 
   def letters_in_message
+    require "pry"; binding.pry
     @message[0].chars
   end
 
