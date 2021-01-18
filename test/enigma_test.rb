@@ -38,5 +38,18 @@ class EnigmaTest < Minitest::Test
     message = "Created #{file_out} with the key #{key} and date #{date}"
     assert_equal message, @enigma.display_message
   end
+
+  def test_it_can_encrypt
+    message = ['hello world']
+    key = '02715'
+    date = '040895'
+
+    expected = {
+                encryption: 'keder ohulw',
+                key: '02715',
+                date: '040895'
+              }
+    assert_equal expected, @enigma.encrypt(message, key, date)
+  end
 end
 
