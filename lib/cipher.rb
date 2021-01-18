@@ -17,28 +17,28 @@ class Cipher
   end
 
   def date
-    Time.now.strftime("%d%m%y").to_i
+    Time.now.strftime("%d%m%y")
   end
 
-  def a_key
-    @key[0..1]
-  end
+  # def a_key
+  #   @key[0..1]
+  # end
 
-  def b_key
-    @key[1..2]
-  end
+  # def b_key
+  #   @key[1..2]
+  # end
 
-  def c_key
-    @key[2..3]
-  end
+  # def c_key
+  #   @key[2..3]
+  # end
 
-  def d_key
-    @key[3..4]
-  end
+  # def d_key
+  #   @key[3..4]
+  # end
 
-  def date_squared
-    (date ** 2).to_s
-  end
+  # def date_squared
+  #   (date ** 2).to_s
+  # end
 
   def four_digit_number
     date_squared[-4, 4]

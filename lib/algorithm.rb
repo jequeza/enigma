@@ -11,4 +11,8 @@ class Algorithm
       d_key: @cipher.key[3..4]
     }
   end
+
+  def square_date
+    ((@cipher.date.to_i) ** 2).to_s
+  end
 end
