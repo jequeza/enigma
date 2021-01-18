@@ -1,18 +1,19 @@
 class Enigma
   attr_reader :file_in,
-              :file_out
+              :file_out,
+              :message
 
   def initialize
     @file_in = ARGV[0]
     @file_out = ARGV[1]
-    @cipher = Cipher.new(read)
+    @cipher = Cipher.new(@message)
+    @message = ""
   end
 
   def read
     handle = File.open(@file_in, "r")
-    text_in = handle.readlines
+    @message = handle.readlines
     handle.close
-    text_in
   end
 
   def write_encryption
