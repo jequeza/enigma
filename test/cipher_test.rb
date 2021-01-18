@@ -74,4 +74,8 @@ class CipherTest < Minitest::Test
   def test_it_can_decrypt_message
     assert_equal "hello world", @cipher.decrypt
   end
+
+  def test_length_helper
+      assert_equal 27, @cipher.alphabet_length
+  end
 end
