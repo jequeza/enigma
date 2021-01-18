@@ -24,4 +24,13 @@ class Algorithm
       d_offset: square_date[-1].to_i
     }
   end
+
+  def shifts
+    all_shifts = {}
+    all_shifts[:a] = keys[:a_key].to_i + offsets[:a_offset]
+    all_shifts[:b] = keys[:b_key].to_i + offsets[:b_offset]
+    all_shifts[:c] = keys[:c_key].to_i + offsets[:c_offset]
+    all_shifts[:d] = keys[:d_key].to_i + offsets[:d_offset]
+    all_shifts
+  end
 end
