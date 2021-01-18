@@ -4,7 +4,7 @@ class Cipher
               :alphabet
 
   def initialize(message)
-    @message = message
+    @message = message #['hello world']
     @key = ''
     @alphabet = ('a'..'z').to_a << ' '
     @al = Algorithm.new(self)

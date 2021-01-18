@@ -1,5 +1,6 @@
 require './lib/enigma'
 require './lib/cipher'
+require './lib/algorithm'
 
 enigma = Enigma.new
 
