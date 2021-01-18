@@ -21,7 +21,7 @@ class CipherTest < Minitest::Test
   end
 
   def test_it_can_generate_date
-    date = Time.now.strftime("%d%m%y").to_i
+    date = Time.now.strftime("%d%m%y")
     assert_operator date, :==, @cipher.date
   end
 

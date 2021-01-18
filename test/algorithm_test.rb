@@ -20,8 +20,11 @@ class AlgorithmTest < Minitest::Test
   end
 
   def test_it_can_square_date
-    @parent.stubs(:date).returns(160121)
+    @parent.stubs(:date).returns('160121')
     expected1 = '25638734641'
     assert_equal expected1, @algorithm.square_date
+    @parent.stubs(:date).returns('040895')
+    expected2 = '1672401025'
+    assert_equal expected2, @algorithm.square_date
   end
 end
