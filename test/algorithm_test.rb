@@ -18,4 +18,10 @@ class AlgorithmTest < Minitest::Test
     expected2 = {a_key: '32', b_key: '28', c_key: '87', d_key: '71'}
     assert_equal expected2, @algorithm.keys
   end
+
+  def test_it_can_square_date
+    @parent.stubs(:date).returns(160121)
+    expected1 = '25638734641'
+    assert_equal expected1, @algorithm.square_date
+  end
 end
