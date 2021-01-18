@@ -89,6 +89,14 @@ class Cipher
     ((shift % 27) + index ) > 27
   end
 
+  def shift_amount_left(shift, index)
+    if shift == index
+      index
+    else
+      (27 - (shift - index)) % 27
+    end
+  end
+
   def shift_amount(shift, index)
     if big_shift?(shift, index)
       (shift % 27) - 27 + index
@@ -129,6 +137,27 @@ class Cipher
       end
     end
     out_message
-    # require "pry"; binding.pry
+  end
+
+  def decrypt
+    out_message = ""
+    letters = @message[0].chars
+    letters.each.with_index(1) do |letter, index|
+      i = 1
+      if alphabet.include?(letter)
+        out_message += index_to_letters[shift_amount_left(shift[index], letters_to_index[letter])]
+        i += 1
+      elsif alphabet.include?(letter) && shift[index] > 27
+        out_message += index_to_letters[shift_amount_left(shift[index], letters_to_index[letter])]
+        i += 1
+      elsif alphabet.include?(letter) && big_shift?(shift[index], letters_to_index[letter])
+        out_message += index_to_letters[shift_amount_left(shift[index], letters_to_index[letter])]
+        i += 1
+      else
+        out_message += letter
+        i += 1
+      end
+    end
+    out_message
   end
 end

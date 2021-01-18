@@ -15,9 +15,15 @@ class Enigma
     text_in
   end
 
-  def write
+  def write_encryption
     writer = File.open(@file_out, "w")
     writer.write(@cipher.encrypt)
+    writer.close
+  end
+
+  def write_decryption
+    writer = File.open(@file_out, "w")
+    writer.write(@cipher.decrypt)
     writer.close
   end
 
