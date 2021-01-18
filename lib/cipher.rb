@@ -69,6 +69,10 @@ class Cipher
     all_shifts
   end
 
+  def alphabet_length
+    @alphabet.length
+  end
+
   def index_to_letters
     index_letters = {}
     alphabet.each.with_index(1) do |letter, index|
@@ -86,22 +90,22 @@ class Cipher
   end
 
   def big_shift?(shift, index)
-    ((shift % 27) + index ) > 27
+    ((shift % alphabet_length) + index ) > alphabet_length
   end
 
   def shift_amount_left(shift, index)
     if shift == index
       index
     else
-      (27 - (shift - index)) % 27
+      (alphabet_length - (shift - index)) % alphabet_length
     end
   end
 
   def shift_amount(shift, index)
     if big_shift?(shift, index)
-      (shift % 27) - 27 + index
+      (shift % alphabet_length) - alphabet_length + index
     else
-      (shift % 27)
+      (shift % alphabet_length)
     end
   end
 
@@ -109,7 +113,7 @@ class Cipher
     hash = {}
     shift_collection = [3, 27, 73, 20]
     i = 0
-    @message[0].chars.each.with_index(1) do |letter, index|
+    letters_in_message.each.with_index(1) do |letter, index|
       hash[index] = shift_collection[i]
       i += 1
       if i == shift_collection.length
@@ -119,11 +123,13 @@ class Cipher
     hash
   end
 
+  def letters_in_message
+    @message[0].chars
+  end
+
   def encrypt
     out_message = ""
-    letters = @message[0].chars
-    letters.each.with_index(1) do |letter, index|
-      # require "pry"; binding.pry
+    letters_in_message.each.with_index(1) do |letter, index|
       i = 1
       if alphabet.include?(letter) && !big_shift?(shift[index], letters_to_index[letter])
         out_message += index_to_letters[letters_to_index[letter] + shift_amount(shift[index], letters_to_index[letter])]
@@ -141,16 +147,9 @@ class Cipher
 
   def decrypt
     out_message = ""
-    letters = @message[0].chars
-    letters.each.with_index(1) do |letter, index|
+    letters_in_message.each.with_index(1) do |letter, index|
       i = 1
       if alphabet.include?(letter)
-        out_message += index_to_letters[shift_amount_left(shift[index], letters_to_index[letter])]
-        i += 1
-      elsif alphabet.include?(letter) && shift[index] > 27
-        out_message += index_to_letters[shift_amount_left(shift[index], letters_to_index[letter])]
-        i += 1
-      elsif alphabet.include?(letter) && big_shift?(shift[index], letters_to_index[letter])
         out_message += index_to_letters[shift_amount_left(shift[index], letters_to_index[letter])]
         i += 1
       else

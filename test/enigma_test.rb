@@ -8,23 +8,27 @@ class EnigmaTest < Minitest::Test
   end
 
   def test_it_exists_and_has_attributes
+    skip
     assert_instance_of Enigma, @enigma
     assert_nil @enigma.file_in
     assert_nil @enigma.file_out
   end
 
   def test_it_can_read_file
+    skip
     @enigma.stubs(:read).returns(["hello"])
     assert_equal ["hello"], @enigma.read
   end
 
   def test_it_can_write_file
+    skip
     expected = {decryption: "hello", key: "34519", date: "100299"}
     @enigma.stubs(:write).returns(expected)
     assert_equal expected, @enigma.write
   end
 
   def test_it_has_display_message
+    skip
     file_out = 'decrypted.txt'
     @cipher.stubs(:key).returns('14784')
     @cipher.stubs(:date).returns('150121')
