@@ -36,4 +36,19 @@ class AlgorithmTest < Minitest::Test
     expected1 = {a_offset: 1, b_offset: 0, c_offset: 2, d_offset: 5}
     assert_equal expected1, @algorithm.offsets
   end
+
+  def test_it_can_generate_shifts_from_keys_and_offsets
+    key1 = {a_key: '23', b_key: '39', c_key: '90', d_key: '01'}
+    offset1 = {a_offset: 4, b_offset: 6, c_offset: 4, d_offset: 1}
+    @algorithm.stubs(:keys).returns(key1)
+    @algorithm.stubs(:offsets).returns(offset1)
+    expected1 = {a: 27, b: 45, c: 94, d: 2}
+    assert_equal expected1, @algorithm.shifts
+    key2 = {a_key: '41', b_key: '03', c_key: '12', d_key: '11'}
+    offset2 = {a_offset: 3, b_offset: 7, c_offset: 2, d_offset: 8}
+    @algorithm.stubs(:keys).returns(key2)
+    @algorithm.stubs(:offsets).returns(offset2)
+    expected2 = {a: 44, b: 10, c: 14, d: 19}
+    assert_equal expected2, @algorithm.shifts
+  end
 end
