@@ -25,7 +25,7 @@ class Enigma
 
   def write_decryption
     writer = File.open(@file_out, "w")
-    writer.write(@cipher.decrypt)
+    writer.write(decrypt(@message, '02715', '040895'))
     writer.close
   end
 
@@ -45,6 +45,14 @@ class Enigma
   def encrypt(message, key=key, date=date)
     message = {}
     message[:encryption] = @cipher.encrypt
+    message[:key] = key
+    message[:date] = date
+    message
+  end
+
+  def decrypt(message, key, date=date)
+    message = {}
+    message[:decryption] = @cipher.decrypt
     message[:key] = key
     message[:date] = date
     message

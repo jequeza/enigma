@@ -120,7 +120,6 @@ class Cipher
   end
 
   def letters_in_message
-    require "pry"; binding.pry
     @message[0].chars
   end
 
