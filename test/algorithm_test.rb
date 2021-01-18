@@ -27,4 +27,13 @@ class AlgorithmTest < Minitest::Test
     expected2 = '1672401025'
     assert_equal expected2, @algorithm.square_date
   end
+
+  def test_it_can_generate_offsets
+    @algorithm.stubs(:square_date).returns('25638734641')
+    expected1 = {a_offset: 4, b_offset: 6, c_offset: 4, d_offset: 1}
+    assert_equal expected1, @algorithm.offsets
+    @algorithm.stubs(:square_date).returns('1672401025')
+    expected1 = {a_offset: 1, b_offset: 0, c_offset: 2, d_offset: 5}
+    assert_equal expected1, @algorithm.offsets
+  end
 end
