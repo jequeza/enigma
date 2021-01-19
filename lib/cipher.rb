@@ -3,8 +3,8 @@ class Cipher
               :message,
               :alphabet
 
-  def initialize(message)
-    @message = message #['hello world']
+  def initialize
+    @message = "" #['hello world']
     @key = ''
     @alphabet = ('a'..'z').to_a << ' '
     @al = Algorithm.new(self)
@@ -105,11 +105,11 @@ class Cipher
     end
   end
 
-  def shift
+  def shift(message)
     hash = {}
     shift_collection = [3, 27, 73, 20]
     i = 0
-    letters_in_message.each.with_index(1) do |letter, index|
+    message[0].chars.each.with_index(1) do |letter, index|
       hash[index] = shift_collection[i]
       i += 1
       if i == shift_collection.length
@@ -123,15 +123,15 @@ class Cipher
     @message[0].chars
   end
 
-  def encrypt
+  def encrypt(message)
     out_message = ""
-    letters_in_message.each.with_index(1) do |letter, index|
+    message[0].chars.each.with_index(1) do |letter, index|
       i = 1
-      if alphabet.include?(letter) && !big_shift?(shift[index], letters_to_index[letter])
-        out_message += index_to_letters[letters_to_index[letter] + shift_amount(shift[index], letters_to_index[letter])]
+      if alphabet.include?(letter) && !big_shift?(shift(message)[index], letters_to_index[letter])
+        out_message += index_to_letters[letters_to_index[letter] + shift_amount(shift(message)[index], letters_to_index[letter])]
         i += 1
-      elsif alphabet.include?(letter) && big_shift?(shift[index], letters_to_index[letter])
-        out_message += index_to_letters[shift_amount(shift[index], letters_to_index[letter])]
+      elsif alphabet.include?(letter) && big_shift?(shift(message)[index], letters_to_index[letter])
+        out_message += index_to_letters[shift_amount(shift(message)[index], letters_to_index[letter])]
         i += 1
       else
         out_message += letter
@@ -141,12 +141,12 @@ class Cipher
     out_message
   end
 
-  def decrypt
+  def decrypt(message)
     out_message = ""
-    letters_in_message.each.with_index(1) do |letter, index|
+    message[0].chars.each.with_index(1) do |letter, index|
       i = 1
       if alphabet.include?(letter)
-        out_message += index_to_letters[shift_amount_left(shift[index], letters_to_index[letter])]
+        out_message += index_to_letters[shift_amount_left(shift(message)[index], letters_to_index[letter])]
         i += 1
       else
         out_message += letter
