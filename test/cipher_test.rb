@@ -28,12 +28,12 @@ class CipherTest < Minitest::Test
 
   def test_it_can_encrypt_message
     @cipher.stubs(:shifts).returns({a: 3, b: 27, c: 73, d: 20})
-    message = ['hello world']
+    message = 'hello world'
     assert_equal "keder ohulw", @cipher.encrypt(message)
   end
 
   def test_it_can_decrypt_message
-    message = ["keder ohulw"]
+    message = "keder ohulw"
     @cipher.stubs(:shifts).returns({a: 3, b: 27, c: 73, d: 20})
     assert_equal "hello world", @cipher.decrypt(message)
   end
@@ -126,7 +126,7 @@ class CipherTest < Minitest::Test
   end
 
   def test_shift_helper
-    message = ['hello']
+    message = 'hello'
     @cipher.stubs(:shifts).returns({a: 3, b: 27, c: 73, d: 20})
     expected = {1 => 3,2 => 27, 3 => 73, 4 => 20, 5 => 3}
     assert_equal expected, @cipher.shift(message)

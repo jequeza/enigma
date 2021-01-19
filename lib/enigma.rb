@@ -43,16 +43,18 @@ class Enigma
   end
 
   def encrypt(message, key_in=key, date_in=date)
+    message_in = message[0].downcase
     message_out = {}
-    message_out[:encryption] = @cipher.encrypt(message, key_en=key_in, date_en=date_in)
+    message_out[:encryption] = @cipher.encrypt(message_in, key_en=key_in, date_en=date_in)
     message_out[:key] = key_in
     message_out[:date] = date_in
     message_out
   end
 
   def decrypt(message, key_in, date_in=date)
+    message_in = message[0].downcase
     message_out = {}
-    message_out[:decryption] = @cipher.decrypt(message, key_in, date_in)
+    message_out[:decryption] = @cipher.decrypt(message_in, key_in, date_in)
     message_out[:key] = key_in
     message_out[:date] = date_in
     message_out
