@@ -28,14 +28,13 @@ class EnigmaTest < Minitest::Test
   end
 
   def test_it_has_display_message
-    skip
-    key = '14784'
-    date = '150121'
-    file_out = 'decrypted.txt'
-    @cipher = mock
-    @cipher.expects(:five_digit_number).returns('14784')
-    @cipher.expects(:date).returns('150121')
-    message = "Created #{file_out} with the key #{key} and date #{date}"
+    key_in = '14784'
+    date_in = '150121'
+    file = 'decrypted.txt'
+    @enigma.stubs(:file_out).returns('decrypted.txt')
+    @enigma.stubs(:key).returns('14784')
+    @enigma.stubs(:date).returns('150121')
+    message = "Created  with the key #{key_in} and date #{date_in}"
     assert_equal message, @enigma.display_message
   end
 
@@ -43,6 +42,9 @@ class EnigmaTest < Minitest::Test
     message = ['hello world']
     key = '02715'
     date = '040895'
+    @enigma.stubs(:key).returns('02715')
+    @enigma.stubs(:date).returns('040895')
+
     expected = {
                 encryption: 'keder ohulw',
                 key: '02715',
@@ -61,7 +63,46 @@ class EnigmaTest < Minitest::Test
                 key: '02715',
                 date: '040895'
               }
-    assert_equal expected, @enigma.dencrypt(message, key, date)
+
+    assert_equal expected, @enigma.decrypt(message, key, date)
+  end
+
+  def test_it_can_encrypt_with_no_date_and_no_key
+    message = ['hello world']
+    expected = {
+                encryption: 'keder ohulw',
+                key: '02715',
+                date: '190121'
+              }
+    encrypted = @enigma.encrypt(message)
+    assert_equal expected[:date], encrypted[:date]
+  end
+
+  def test_it_can_encrypt_with_key_and_no_date
+    message = ['hello world']
+    key = '02715'
+    expected = {
+                encryption: 'keder ohulw',
+                key: '02715',
+                date: '190121'
+              }
+    encrypted = @enigma.encrypt(message, key)
+    assert_equal expected[:date], encrypted[:date]
+    assert_equal expected[:key], encrypted[:key]
+  end
+
+  def test_it_can_decrypt_from_encrypted
+    message = ['hello world']
+    key = '02715'
+    expected = {
+                encryption: 'keder ohulw',
+                key: '02715',
+                date: '190121'
+              }
+    encrypted = @enigma.encrypt(message, key)
+    assert_equal expected[:key], encrypted[:key]
+    decrypted = @enigma.decrypt(encrypted[:encryption], key)
+    assert_equal encrypted[:key], decrypted[:key]
+    assert_equal encrypted[:date], decrypted[:date]
   end
 end
-

@@ -1,65 +1,25 @@
 class Cipher
   attr_reader :key,
-              :message,
-              :alphabet
+              :alphabet,
+              :al,
+              :date
 
-  def initialize(message)
-    @message = message #['hello world']
+  def initialize
     @key = ''
     @alphabet = ('a'..'z').to_a << ' '
     @al = Algorithm.new(self)
+    @date = ''
   end
 
   def five_digit_number
     num = Array.new(5) { rand(0...9) }
     num_joined = num.join
     @key = num_joined
-    num_joined
   end
 
-  def date
-    Time.now.strftime("%d%m%y")
+  def get_date
+    @date = Time.now.strftime("%d%m%y")
   end
-
-  # def a_key
-  #   @key[0..1]
-  # end
-
-  # def b_key
-  #   @key[1..2]
-  # end
-
-  # def c_key
-  #   @key[2..3]
-  # end
-
-  # def d_key
-  #   @key[3..4]
-  # end
-
-  # def date_squared
-  #   (date ** 2).to_s
-  # end
-
-  # def four_digit_number
-  #   date_squared[-4, 4]
-  # end
-
-  # def a_offset
-  #   four_digit_number[0].to_i
-  # end
-
-  # def b_offset
-  #   four_digit_number[1].to_i
-  # end
-  #
-  # def c_offset
-  #   four_digit_number[2].to_i
-  # end
-  #
-  # def d_offset
-  #   four_digit_number[3].to_i
-  # end
 
   def shifts
     @al.shifts
@@ -105,11 +65,11 @@ class Cipher
     end
   end
 
-  def shift
+  def shift(message)
     hash = {}
-    shift_collection = [3, 27, 73, 20]
+    shift_collection = shifts.values
     i = 0
-    letters_in_message.each.with_index(1) do |letter, index|
+    message[0].chars.each.with_index(1) do |letter, index|
       hash[index] = shift_collection[i]
       i += 1
       if i == shift_collection.length
@@ -119,38 +79,31 @@ class Cipher
     hash
   end
 
-  def letters_in_message
-    @message[0].chars
-  end
-
-  def encrypt
+  def encrypt(message, key_in=@key, date_in=get_date)
+    @key = key_in if !key_in.empty?
+    @date = date_in if !date_in.empty?
     out_message = ""
-    letters_in_message.each.with_index(1) do |letter, index|
-      i = 1
-      if alphabet.include?(letter) && !big_shift?(shift[index], letters_to_index[letter])
-        out_message += index_to_letters[letters_to_index[letter] + shift_amount(shift[index], letters_to_index[letter])]
-        i += 1
-      elsif alphabet.include?(letter) && big_shift?(shift[index], letters_to_index[letter])
-        out_message += index_to_letters[shift_amount(shift[index], letters_to_index[letter])]
-        i += 1
+    message[0].chars.each.with_index(1) do |letter, index|
+      if alphabet.include?(letter) && !big_shift?(shift(message)[index], letters_to_index[letter])
+        out_message += index_to_letters[letters_to_index[letter] + shift_amount(shift(message)[index], letters_to_index[letter])]
+      elsif alphabet.include?(letter) && big_shift?(shift(message)[index], letters_to_index[letter])
+        out_message += index_to_letters[shift_amount(shift(message)[index], letters_to_index[letter])]
       else
         out_message += letter
-        i += 1
       end
     end
     out_message
   end
 
-  def decrypt
+  def decrypt(message, key_in=@key, date_in=get_date)
+    @key = key_in if !key_in.empty?
+    @date = date_in if !date_in.empty?
     out_message = ""
-    letters_in_message.each.with_index(1) do |letter, index|
-      i = 1
+    message[0].chars.each.with_index(1) do |letter, index|
       if alphabet.include?(letter)
-        out_message += index_to_letters[shift_amount_left(shift[index], letters_to_index[letter])]
-        i += 1
+        out_message += index_to_letters[shift_amount_left(shift(message)[index], letters_to_index[letter])]
       else
         out_message += letter
-        i += 1
       end
     end
     out_message
