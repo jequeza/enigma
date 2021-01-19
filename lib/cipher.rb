@@ -67,7 +67,7 @@ class Cipher
 
   def shift(message)
     hash = {}
-    shift_collection = shifts.values #[3, 27, 73, 20]
+    shift_collection = shifts.values
     i = 0
     message[0].chars.each.with_index(1) do |letter, index|
       hash[index] = shift_collection[i]

@@ -29,11 +29,13 @@ class Enigma
   end
 
   def key
-    @cipher.five_digit_number
+    @cipher.five_digit_number if @cipher.key.empty?
+    @cipher.key
   end
 
   def date
-    @cipher.get_date
+    @cipher.get_date if @cipher.date.empty?
+    @cipher.date
   end
 
   def display_message
