@@ -56,6 +56,3 @@ class Enigma
     message_out
   end
 end
-
-
-
