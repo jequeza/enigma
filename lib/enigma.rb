@@ -33,7 +33,7 @@ class Enigma
   end
 
   def date
-    @cipher.date
+    @cipher.get_date
   end
 
   def display_message
@@ -42,17 +42,17 @@ class Enigma
 
   def encrypt(message, key_in=key, date_in=date)
     message_out = {}
-    message_out[:encryption] = @cipher.encrypt(message)
-    message_out[:key] = key
-    message_out[:date] = date
+    message_out[:encryption] = @cipher.encrypt(message, key_en=key_in, date_en=date_in)
+    message_out[:key] = key_in
+    message_out[:date] = date_in
     message_out
   end
 
-  def decrypt(message, key, date=date)
+  def decrypt(message, key_in, date_in=date)
     message_out = {}
-    message_out[:decryption] = @cipher.decrypt(message)
-    message_out[:key] = key
-    message_out[:date] = date
+    message_out[:decryption] = @cipher.decrypt(message, key_in, date_in)
+    message_out[:key] = key_in
+    message_out[:date] = date_in
     message_out
   end
 end

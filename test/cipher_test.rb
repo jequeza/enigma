@@ -23,7 +23,7 @@ class CipherTest < Minitest::Test
 
   def test_it_can_generate_date
     date = Time.now.strftime("%d%m%y")
-    assert_operator date, :==, @cipher.date
+    assert_operator date, :==, @cipher.get_date
   end
 
   def test_it_can_encrypt_message
@@ -43,9 +43,8 @@ class CipherTest < Minitest::Test
   end
 
   def test_it_can_get_shifts
-    al = mock('algorithm')
     info = {a: 4, b: 6, c: 4, d: 1}
-    al.stubs(:shifts).returns(info)
+    @cipher.al.stubs(:shifts).returns(info)
     assert_equal info, @cipher.shifts
   end
 

@@ -51,7 +51,6 @@ class EnigmaTest < Minitest::Test
                 date: '040895'
               }
 
-    @cipher.stubs(:encrypt(message)).returns('keder ohulw')
     assert_equal expected, @enigma.encrypt(message, key, date)
   end
 
@@ -65,7 +64,6 @@ class EnigmaTest < Minitest::Test
                 date: '040895'
               }
 
-    @cipher.stubs(:shifts).returns({a: 3, b: 27, c: 73, d: 20})
     assert_equal expected, @enigma.decrypt(message, key, date)
   end
 
@@ -74,10 +72,10 @@ class EnigmaTest < Minitest::Test
     expected = {
                 encryption: 'keder ohulw',
                 key: '02715',
-                date: '180121'
+                date: '190121'
               }
-
-    assert_equal expected[:date], @enigma.encrypt(message)[:date]
+    encrypted = @enigma.encrypt(message)
+    assert_equal expected[:date], encrypted[:date]
   end
 end
 

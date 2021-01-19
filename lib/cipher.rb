@@ -1,12 +1,14 @@
 class Cipher
   attr_reader :key,
               :alphabet,
-              :al
+              :al,
+              :date
 
   def initialize
     @key = ''
     @alphabet = ('a'..'z').to_a << ' '
     @al = Algorithm.new(self)
+    @date = ''
   end
 
   def five_digit_number
@@ -15,8 +17,8 @@ class Cipher
     @key = num_joined
   end
 
-  def date
-    Time.now.strftime("%d%m%y")
+  def get_date
+    @date = Time.now.strftime("%d%m%y")
   end
 
   def shifts
@@ -77,7 +79,9 @@ class Cipher
     hash
   end
 
-  def encrypt(message)
+  def encrypt(message, key_in=@key, date_in=get_date)
+    @key = key_in if !key_in.empty?
+    @date = date_in if !date_in.empty?
     out_message = ""
     message[0].chars.each.with_index(1) do |letter, index|
       if alphabet.include?(letter) && !big_shift?(shift(message)[index], letters_to_index[letter])
@@ -91,7 +95,9 @@ class Cipher
     out_message
   end
 
-  def decrypt(message)
+  def decrypt(message, key_in=@key, date_in=get_date)
+    @key = key_in if !key_in.empty?
+    @date = date_in if !date_in.empty?
     out_message = ""
     message[0].chars.each.with_index(1) do |letter, index|
       if alphabet.include?(letter)
