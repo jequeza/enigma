@@ -69,7 +69,7 @@ class Cipher
     hash = {}
     shift_collection = shifts.values
     i = 0
-    message[0].chars.each.with_index(1) do |letter, index|
+    message.chars.each.with_index(1) do |letter, index|
       hash[index] = shift_collection[i]
       i += 1
       if i == shift_collection.length
@@ -83,7 +83,7 @@ class Cipher
     @key = key_in if !key_in.empty?
     @date = date_in if !date_in.empty?
     out_message = ""
-    message[0].chars.each.with_index(1) do |letter, index|
+    message.chars.each.with_index(1) do |letter, index|
       if alphabet.include?(letter) && !big_shift?(shift(message)[index], letters_to_index[letter])
         out_message += index_to_letters[letters_to_index[letter] + shift_amount(shift(message)[index], letters_to_index[letter])]
       elsif alphabet.include?(letter) && big_shift?(shift(message)[index], letters_to_index[letter])
@@ -99,7 +99,7 @@ class Cipher
     @key = key_in if !key_in.empty?
     @date = date_in if !date_in.empty?
     out_message = ""
-    message[0].chars.each.with_index(1) do |letter, index|
+    message.chars.each.with_index(1) do |letter, index|
       if alphabet.include?(letter)
         out_message += index_to_letters[shift_amount_left(shift(message)[index], letters_to_index[letter])]
       else
